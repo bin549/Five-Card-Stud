@@ -7,6 +7,8 @@ from .settings import Settings
 from . import game_functions as gf
 from .game_stats import GameStats
 
+BACKGROUND_IMAGE_HEIGHT = 800
+
 
 def run_game():
     pygame.init()
@@ -20,6 +22,7 @@ def run_game():
 
     stats = GameStats(settings)
     stats2 = GameStats(settings)
+
 
     """
     card1 = Card("spade", 'A')
