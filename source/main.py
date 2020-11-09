@@ -3,7 +3,6 @@ from .card import Card
 from .deck import Deck
 from .hands import Hands
 from .person import Person
-from .settings import Settings
 from . import game_functions as gf
 from .game_stats import GameStats
 
@@ -11,18 +10,12 @@ BACKGROUND_IMAGE_HEIGHT = 800
 
 
 def run_game():
-    pygame.init()
-    settings = Settings()
-    pygame.display.set_caption("Five Card Stud")
-    screen = pygame.display.set_mode(
-        (settings.screen_width, settings.screen_height))
+    background, gameover, settings, screen = gf.init_game()
+
     bg_color = (230, 230, 230)
     person = Person(settings, screen)
-    gf.create_fleet(screen, screen, person)
-
+    gf.create_fleet(settings, screen, person)
     stats = GameStats(settings)
-    stats2 = GameStats(settings)
-
 
     """
     card1 = Card("spade", 'A')

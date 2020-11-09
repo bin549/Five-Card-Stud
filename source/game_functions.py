@@ -1,8 +1,13 @@
 import sys
 import pygame
+from .settings import Settings
 
 
-def initGame():
+def init_game():
+    pygame.init()
+
+    pygame.display.set_caption("Five Card Stud")
+
     pygame.mixer.music.load('resource/Sounds/game_music.wav')
     pygame.mixer.music.play(-1, 0.0)
     pygame.mixer.music.set_volume(0.2)
@@ -13,7 +18,11 @@ def initGame():
     game_over_sound = pygame.mixer.Sound('resource/sound/game_over.wav')
     game_over_sound.set_volume(0.3)
 
-    return (background, gameover)
+    settings = Settings()
+    screen = pygame.display.set_mode(
+        (settings.screen_width, settings.screen_height))
+
+    return background, gameover, settings, screen
 
 
 def update_screen(settings, screen, player):
