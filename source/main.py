@@ -20,7 +20,7 @@ def run_game():
     """
     card1 = Card("spade", 'A')
     card2 = Card("heart", 'A')
-    print(card1 > card2)
+    print(card1 > card2)  
     c = [card1, card2]
     print(max(c))
     print(card1.strength)
