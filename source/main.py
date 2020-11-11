@@ -16,7 +16,7 @@ def run_game():
     person = Person(settings, screen)
     gf.create_fleet(settings, screen, person)
     stats = GameStats(settings)
-
+    # happy
     """
     card1 = Card("spade", 'A')
     card2 = Card("heart", 'A')
