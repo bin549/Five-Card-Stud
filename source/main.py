@@ -12,11 +12,10 @@ BACKGROUND_IMAGE_HEIGHT = 800
 def run_game():
     background, gameover, settings, screen = gf.init_game()
 
-    bg_color = (230, 230, 230)
+    # bg_color = (230, 230, 230)
     person = Person(settings, screen)
     gf.create_fleet(settings, screen, person)
     stats = GameStats(settings)
-    # happy
     """
     card1 = Card("spade", 'A')
     card2 = Card("heart", 'A')
