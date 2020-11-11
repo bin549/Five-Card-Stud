@@ -20,6 +20,7 @@ class Person(Sprite):
         self.chips = Chips()
 
     def init_card(self, deck, num=2):
+        self.hands.reset_card()
         for _ in range(num):
             self.hands.add_card(deck.deal())
 

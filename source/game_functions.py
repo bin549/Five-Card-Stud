@@ -8,14 +8,14 @@ def init_game():
 
     pygame.display.set_caption("Five Card Stud")
 
-    pygame.mixer.music.load('resource/Sounds/game_music.wav')
+    pygame.mixer.music.load('resources/Sounds/植松伸夫 - Shuffle or Boogie.mp3')
     pygame.mixer.music.play(-1, 0.0)
     pygame.mixer.music.set_volume(0.2)
 
-    background = pygame.image.load('resources/Sprites/background.png')
-    gameover = pygame.image.load('resource/Sprites/gameover.png')
+    background = pygame.image.load('resources/Sprites/Character/Monkey.png')
+    gameover = pygame.image.load('resources/Sprites/Character/Monkey.png')
 
-    game_over_sound = pygame.mixer.Sound('resource/sound/game_over.wav')
+    game_over_sound = pygame.mixer.Sound('resources/Sounds/game_music.ogg')
     game_over_sound.set_volume(0.3)
 
     settings = Settings()

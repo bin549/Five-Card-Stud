@@ -17,6 +17,9 @@ class Hands:
             self.points -= 10
             self.aces -= 1
 
+    def reset_card(self):
+        Hands.__init__(self)
+
     def __str__(self):
         return " ".join([card.__str__() for card in self.cards]) + "\n"
 

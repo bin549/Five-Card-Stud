@@ -20,5 +20,8 @@ class Deck:
     def deal(self):
         return self.cards.pop()
 
+    def reset(self):
+        self.__init__()
+
     def __str__(self):
         return " ".join([card.__str__() for card in self.cards]) + "\n"
