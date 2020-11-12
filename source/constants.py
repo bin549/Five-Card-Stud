@@ -1,0 +1,5 @@
+MAIN_MENU = 'main menu'
+LOAD_SCREEN = 'load screen'
+TIME_OUT = 'time out'
+GAME_OVER = 'game over'
+Game_Scene = 'game scene'
