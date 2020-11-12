@@ -1,5 +1,4 @@
-from . import game_functions as gf
-from .blackjack import Blackjack
+
 from . import tools
 from .states import main_menu, load_screen, game_scene
 from . import constants as c
