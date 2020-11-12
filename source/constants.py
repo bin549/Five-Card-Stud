@@ -11,9 +11,6 @@ BLACK        = (  0,   0,   0)
 
 ITEM_SHEET = 'item_objects'
 
-
-PLAYER1 = '1 PLAYER GAME'
-
 ORIGINAL_CAPTION = "Five Card Stud"
 
 SCREEN_HEIGHT = 600
@@ -24,9 +21,9 @@ CURRENT_TIME = 'current time'
 
 PLAYER_NAME = 'player name'
 PLAYER_MARIO = 'mario'
-PLAYER_LUIGI = 'luigi'
+PLAYER_MONKEY = 'monkey'
 
-PLAYER1 = '1 PLAYER GAME'
+PLAYER1 = '1 PLAYER'
 PLAYER2 = '2 PLAYER GAME'
 
 GROUND_HEIGHT = SCREEN_HEIGHT - 62

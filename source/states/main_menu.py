@@ -25,7 +25,7 @@ class Menu(tools.State):
         self.player_list = []
         player_rect_info = [(178, 32, 12, 16), (178, 128, 12, 16)]
         for rect in player_rect_info:
-            image = tools.get_image(setup.GFX['mario_bros'],
+            image = tools.get_image(setup.GFX['monkey'],
                                     *rect, c.BLACK, 2.9)
             rect = image.get_rect()
             rect.x, rect.bottom = 110, c.GROUND_HEIGHT
@@ -33,7 +33,7 @@ class Menu(tools.State):
         self.player_index = 0
 
     def setup_background(self):
-        self.background = setup.GFX['level_1']
+        self.background = setup.GFX['menu']
         self.background_rect = self.background.get_rect()
         self.background = pg.transform.scale(self.background,
                                     (int(self.background_rect.width*c.BACKGROUND_MULTIPLER),
@@ -76,7 +76,7 @@ class Menu(tools.State):
             if keys[pg.K_DOWN]:
                 self.cursor.state = c.PLAYER2
                 self.player_index = 1
-                self.game_info[c.PLAYER_NAME] = c.PLAYER_LUIGI
+                self.game_info[c.PLAYER_NAME] = c.PLAYER_MONKEY
         elif self.cursor.state == c.PLAYER2:
             self.cursor.rect.y = 403
             if keys[pg.K_UP]:
