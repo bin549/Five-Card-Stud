@@ -7,7 +7,7 @@ class LoadScreen(tools.State):
 
     def __init__(self):
         tools.State.__init__(self)
-        self.time_list = [2400, 2600, 2635]
+        self.time_list = [200, 200, 200]
 
     def startup(self, current_time, persist):
         self.start_time = current_time
@@ -26,8 +26,14 @@ class LoadScreen(tools.State):
     def update(self, surface, keys, current_time):
         if (current_time - self.start_time) < self.time_list[0]:
             surface.fill(c.BLACK)
-            self.overhead_info.update(self.game_info)
-            self.overhead_info.draw(surface)
+        elif (current_time - self.start_time) < self.time_list[1]:
+            surface.fill((255,5,5))
+        elif (current_time - self.start_time) < self.time_list[2]:
+            surface.fill((106, 150, 252))
+        else:
+            self.done = True
+            #self.overhead_info.update(self.game_info)
+            #self.overhead_info.draw(surface)
 
 
 class GameOver(LoadScreen):

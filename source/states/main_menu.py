@@ -21,6 +21,21 @@ class Menu(tools.State):
         self.setup_player()
         self.setup_cursor()
 
+    def update(self, surface, keys, current_time):
+        self.current_time = current_time
+        self.game_info[c.CURRENT_TIME] = self.current_time
+        self.player_image = self.player_list[self.player_index][0]
+        self.player_rect = self.player_list[self.player_index][1]
+        self.update_cursor(keys)
+        self.overhead_info.update(self.game_info)
+
+        surface.blit(self.background, self.viewport, self.viewport)
+        surface.blit(self.image_dict['GAME_NAME_BOX'][0],
+                     self.image_dict['GAME_NAME_BOX'][1])
+        surface.blit(self.player_image, self.player_rect)
+        surface.blit(self.cursor.image, self.cursor.rect)
+        self.overhead_info.draw(surface)
+
     def setup_player(self):
         self.player_list = []
         player_rect_info = [(178, 32, 12, 16), (178, 128, 12, 16)]
@@ -54,21 +69,6 @@ class Menu(tools.State):
         rect.x, rect.y = (220, 358)
         self.cursor.rect = rect
         self.cursor.state = c.PLAYER1
-
-    def update(self, surface, keys, current_time):
-        self.current_time = current_time
-        self.game_info[c.CURRENT_TIME] = self.current_time
-        self.player_image = self.player_list[self.player_index][0]
-        self.player_rect = self.player_list[self.player_index][1]
-        self.update_cursor(keys)
-        self.overhead_info.update(self.game_info)
-
-        surface.blit(self.background, self.viewport, self.viewport)
-        surface.blit(self.image_dict['GAME_NAME_BOX'][0],
-                     self.image_dict['GAME_NAME_BOX'][1])
-        surface.blit(self.player_image, self.player_rect)
-        surface.blit(self.cursor.image, self.cursor.rect)
-        self.overhead_info.draw(surface)
 
     def update_cursor(self, keys):
         if self.cursor.state == c.PLAYER1:

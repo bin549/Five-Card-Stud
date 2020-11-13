@@ -1,6 +1,6 @@
 MAIN_MENU = 'main menu'
 LOAD_SCREEN = 'load screen'
-TIME_OUT = 'time out'
+Retry = 'retry'
 GAME_OVER = 'game over'
 Game_Scene = 'game scene'
 

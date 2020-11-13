@@ -2,7 +2,8 @@ from .. import setup, tools
 from .. entities.person import Person
 from .. entities.deck import Deck
 from .. import game_functions as gf
-
+import pygame as pg
+from .. import constants as c
 
 class GameScene(tools.State):
 
@@ -11,17 +12,25 @@ class GameScene(tools.State):
         self.player = None
 
     def startup(self, current_time, persist):
-        pass
+        print(11)
+        self.setup_background()
 
     def setup_background(self):
-        pass
+        self.background = setup.GFX['Cute']
+        self.background_rect = self.background.get_rect()
+        self.background = pg.transform.scale(self.background,
+                                             (int(self.background_rect.width * c.BACKGROUND_MULTIPLER),
+                                              int(self.background_rect.height * c.BACKGROUND_MULTIPLER)))
+        self.viewport = setup.SCREEN.get_rect(bottom=setup.SCREEN_RECT.bottom)
+
+    def update(self, surface, keys, current_time):
+        surface.blit(self.background, self.viewport, self.viewport)
 
     def setup_player(self):
         pass
 
-    def setup_1(self):
 
-
+"""
         background, gameover, settings, screen = gf.init_game()
 
         class Blackjack:
@@ -61,9 +70,7 @@ class GameScene(tools.State):
                         self.player.hit(self.deck.deal())
                     elif x[0] == 's':
                         self.stand = True
-
                     self.show_some()
-
                     if self.player.hands.points > 21:
                         print("Player bunst, Dealer wins")
                         self.player.chips.lose_bet()
@@ -72,12 +79,9 @@ class GameScene(tools.State):
             def run(self):
                 self.start()
                 self.player_hit()
-
                 while self.dealer.hands.points < 17:
                     self.dealer.hit(self.deck.deal())
-
                 self.show_all()
-
                 if self.dealer.hands.points > 21 or self.dealer.hands.points < self.player.hands.points:
                     print("Player wins")
                     self.player.chips.win_bet()
@@ -88,7 +92,7 @@ class GameScene(tools.State):
                         print("no money boy need go home.")
                         self.over = True
                 else:
-                    print("It's a push")
+                    print("It's a push")d
 
                 print("player stand at :" + str(self.player.chips.total))
 
@@ -106,3 +110,4 @@ class GameScene(tools.State):
                             continue
                         else:
                             break
+"""
