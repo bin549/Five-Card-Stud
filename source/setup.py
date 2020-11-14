@@ -10,3 +10,5 @@ SCREEN = pg.display.set_mode(c.SCREEN_SIZE)
 SCREEN_RECT = SCREEN.get_rect()
 
 GFX = tools.load_all_gfx(os.path.join("resources", "sprites"))
+
+CGFX = tools.load_all_gfx(os.path.join("resources", "sprites", "cards"))

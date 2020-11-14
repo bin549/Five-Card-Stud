@@ -27,7 +27,7 @@ class LoadScreen(tools.State):
         if (current_time - self.start_time) < self.time_list[0]:
             surface.fill(c.BLACK)
         elif (current_time - self.start_time) < self.time_list[1]:
-            surface.fill((255,5,5))
+            surface.fill((255, 5, 5))
         elif (current_time - self.start_time) < self.time_list[2]:
             surface.fill((106, 150, 252))
         else:

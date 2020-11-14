@@ -1,32 +1,49 @@
 from .. import setup, tools
-from .. entities.person import Person
-from .. entities.deck import Deck
-from .. import game_functions as gf
 import pygame as pg
 from .. import constants as c
+from ..components import person
+
 
 class GameScene(tools.State):
 
     def __init__(self):
         tools.State.__init__(self)
-        self.player = None
+        self.person = None
 
     def startup(self, current_time, persist):
-        print(11)
         self.setup_background()
+        self.setup_player()
+        self.setup_dealer()
+        self.setup_stand()
+        self.setup_deck()
+
+    def update(self, surface, keys, current_time):
+        surface.blit(self.background, self.viewport, self.viewport)
 
     def setup_background(self):
-        self.background = setup.GFX['Cute']
+        self.background = setup.CGFX['b1fh']
         self.background_rect = self.background.get_rect()
         self.background = pg.transform.scale(self.background,
                                              (int(self.background_rect.width * c.BACKGROUND_MULTIPLER),
                                               int(self.background_rect.height * c.BACKGROUND_MULTIPLER)))
         self.viewport = setup.SCREEN.get_rect(bottom=setup.SCREEN_RECT.bottom)
 
-    def update(self, surface, keys, current_time):
-        surface.blit(self.background, self.viewport, self.viewport)
+
 
     def setup_player(self):
+        self.person = person.Person(self.game_info[c.PLAYER_NAME])
+        self.player.rect.x = self.viewport.x + self.player_x
+        self.player.rect.bottom = self.player_y
+        self.viewport.x = self.player.rect.x - 110
+
+
+    def setup_deck(self):
+        pass
+
+    def setup_dealer(self):
+        pass
+
+    def setup_stand(self):
         pass
 
 
