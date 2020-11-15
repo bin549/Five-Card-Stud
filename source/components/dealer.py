@@ -1,10 +1,9 @@
 from .hands import Hands
 from .chips import Chips
-from pygame.sprite import Sprite
 from .. import setup
+from .person import Person
 
-
-class Person(Sprite):
+class Dealer(Person):
 
     def __init__(self, screen):
         super(Person, self).__init__()

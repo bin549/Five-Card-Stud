@@ -1,11 +1,12 @@
 import random
 from .card import Card
+from pygame.sprite import Sprite
 
 suits = ["spade", "heart", "diamond", "club"]
 ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 
 
-class Deck:
+class Deck(Sprite):
 
     def __init__(self):
         self.cards = []
