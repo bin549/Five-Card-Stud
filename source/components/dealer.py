@@ -30,8 +30,5 @@ class Dealer(Person):
     def hit(self, card):
         self.hands.add_card(card)
 
-    def update(self):
-        self.rect.centerx = self.center
-
     def blitme(self):
         self.screen.blit(self.image, self.rect)

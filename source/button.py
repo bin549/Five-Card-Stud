@@ -17,7 +17,7 @@ class Button():
         self.rect = pygame.Rect(0, 0, self.width, self.height)
         self.rect.topleft = (x, y)
         self.text = text
-		self.init_msg()
+        self.init_msg()
 
     def init_msg(self):
         if self.enable:

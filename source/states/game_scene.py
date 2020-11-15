@@ -19,6 +19,7 @@ class GameScene(tools.State):
             (c.SCREEN_WIDTH, c.SCREEN_HEIGHT))
 
         self.stand = False
+        self.next = c.LOAD_SCREEN
 
     def startup(self, current_time, persist):
         print("welcome to my Blackjack world!")
@@ -26,6 +27,7 @@ class GameScene(tools.State):
         self.setup_player()
         self.setup_dealer()
         self.setup_deck()
+        self.run()
 
     def update(self, surface, keys, current_time):
         surface.blit(self.background, self.viewport, self.viewport)
@@ -43,8 +45,7 @@ class GameScene(tools.State):
 
     def setup_player(self):
         self.player = person.Person(self.screen)
-       # x = int(input("Please take your ante: "))
-        self.player.take_ante(100)
+
 
     def setup_deck(self):
         self.deck = deck.Deck(self.screen)
@@ -57,7 +58,7 @@ class GameScene(tools.State):
         self.dealer.hands.cards[0].face_up = False
         print(self.dealer.hands)
         print("Player's hands: ")
-        print(self.player.hands)b
+        print(self.player.hands)
 
     def show_all(self):
         print("Dealer's hands: ")
@@ -88,8 +89,10 @@ class GameScene(tools.State):
                 self.stand = True
 
     def run(self):
-        self.start()
+        # x = int(input("Please take your ante: "))
+        self.player.take_ante(100)
         self.player_hit()
+
         while self.dealer.hands.points < 17:
             self.dealer.hit(self.deck.deal())
         self.show_all()
@@ -106,4 +109,3 @@ class GameScene(tools.State):
             print("It's a push")
 
         print("player stand at :" + str(self.player.chips.total))
-
