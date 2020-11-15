@@ -6,13 +6,14 @@ from .person import Person
 class Dealer(Person):
 
     def __init__(self, screen):
-        super(Person, self).__init__()
+        super(Dealer, self).__init__(screen)
         self.screen = screen
-        self.image = setup.GFX['Cute']
+        self.image = setup.GFX['alien']
+
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.rect.centerx = self.screen_rect.centerx
-        self.rect.bottom = self.screen_rect.bottom
+        self.rect.bottom = self.screen_rect.centerx
         self.center = float(self.rect.centerx)
 
         self.hands = Hands()

@@ -6,7 +6,7 @@ from .person import Person
 class Player(Person):
 
     def __init__(self, screen):
-        super(Player, self).__init__()
+        super(Player, self).__init__(screen)
         self.screen = screen
         self.image = setup.GFX['Cute']
         self.rect = self.image.get_rect()

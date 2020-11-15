@@ -1,4 +1,5 @@
 from pygame.sprite import Sprite
+from .. import setup
 
 rank_points = {'2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7,
                '8': 8, '9': 9, '10': 10, 'J': 10, 'Q': 10, 'K': 10, 'A': 11}
@@ -11,12 +12,22 @@ suit_values = {"spade": 4, "heart": 3, "diamond": 1, "club": 2}
 
 class Card(Sprite):
 
-    def __init__(self, suit, rank):
+    def __init__(self, suit, rank, screen):
+        super(Card, self).__init__()
         self.suit = suit
         self.rank = rank
         self.point = rank_points[rank]
         self.face_up = True
         self.strength = rank_values[rank] * 10 + suit_values[suit]
+
+        self.screen = screen
+        self.image = setup.CGFX['black_joker']
+        self.rect = self.image.get_rect()
+        self.screen_rect = screen.get_rect()
+        self.rect.centerx = self.screen_rect.centerx
+        self.rect.bottom = self.screen_rect.bottom
+        self.center = float(self.rect.centerx)
+        self.screen = screen
 
     def __str__(self):
         if not self.face_up:
@@ -37,3 +48,6 @@ class Card(Sprite):
 
     def __le__(self, other):
         return self < other or self == other
+
+    def blitme(self):
+        self.screen.blit(self.image, self.rect)
