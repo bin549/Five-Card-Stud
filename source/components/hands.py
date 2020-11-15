@@ -25,3 +25,7 @@ class Hands:
 
     def __getitem__(self, pos):
         return self.cards[pos]
+
+    def draw_us(self):
+        for card in self.cards:
+            card.blitme()

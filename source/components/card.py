@@ -18,10 +18,12 @@ class Card(Sprite):
         self.rank = rank
         self.point = rank_points[rank]
         self.face_up = True
+        self.card_img = self.suit + '_' + self.rank
         self.strength = rank_values[rank] * 10 + suit_values[suit]
 
         self.screen = screen
-        self.image = setup.CGFX['black_joker']
+
+        self.image = setup.CGFX[self.card_img]
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.rect.centerx = self.screen_rect.centerx
@@ -49,5 +51,14 @@ class Card(Sprite):
     def __le__(self, other):
         return self < other or self == other
 
+    def flip(self, dir_up):
+        if dir_up:
+            self.face_up = True
+            self.image = setup.CGFX[self.card_img]
+        else:
+            self.face_up = False
+            self.image = setup.CGFX["b2fv"]
+
     def blitme(self):
+        print(self.card_img)
         self.screen.blit(self.image, self.rect)
