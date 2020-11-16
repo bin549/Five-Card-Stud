@@ -35,7 +35,7 @@ class GameScene(tools.State):
         self.dealer.blitme()
         self.deck.blitme()
 
-        self.run()
+        # self.run()
 
     def update(self, surface, keys, current_time):
         surface.blit(self.background, self.viewport, self.viewport)
