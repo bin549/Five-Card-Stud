@@ -4,7 +4,8 @@ from pygame.locals import *
 BUTTON_WIDTH = 140
 BUTTON_HEIGHT = 50
 
-class Button():
+
+class Button(object):
 
     def __init__(self, screen, text, x, y, color, enable):
         self.screen = screen
