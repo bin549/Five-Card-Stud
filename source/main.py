@@ -40,8 +40,8 @@ def run_game():
         clock = pygame.time.Clock()
         clock.tick(60)
 
-        light_white = (255, 255, 255)
-        light_black = (255, 255, 255)
+        light_white = (40, 40, 40)
+        light_black = (0, 0, 0)
         pygame.draw.rect(screen, light_white, pygame.Rect(0, 0, MAP_WIDTH, SCREEN_HEIGHT))
         pygame.draw.rect(screen, light_black, pygame.Rect(MAP_WIDTH, 0, INFO_WIDTH, SCREEN_HEIGHT))
         for bu in buttons:
