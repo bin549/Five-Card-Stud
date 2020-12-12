@@ -32,8 +32,8 @@ class LoadScreen(tools.State):
             surface.fill((106, 150, 252))
         else:
             self.done = True
-            #self.overhead_info.update(self.game_info)
-            #self.overhead_info.draw(surface)
+            # self.overhead_info.update(self.game_info)
+            # self.overhead_info.draw(surface)
 
 
 class GameOver(LoadScreen):

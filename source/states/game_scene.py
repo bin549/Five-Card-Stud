@@ -83,7 +83,7 @@ class GameScene(tools.State):
         self.show_some()
         x = int(input("Please take your ante: "))
         self.player.take_ante(x)
-        #while not self.done:
+        # while not self.done:
        #     self.run()
 
     def player_hit(self):

@@ -66,7 +66,8 @@ class GiveupButton(Button):
             game.is_play = False
             if game.winner is None:
                 game.winner = game.map.reverseTurn(game.player)
-            self.msg_image = self.font.render(self.text, True, self.text_color, self.button_color[1])
+            self.msg_image = self.font.render(
+                self.text, True, self.text_color, self.button_color[1])
             self.enable = False
             return True
         return False
@@ -75,4 +76,3 @@ class GiveupButton(Button):
         if not self.enable:
             self.msg_image = self.font.render(self.text, True, self.text_color, self.button_color[0])
             self.enable = True
-
