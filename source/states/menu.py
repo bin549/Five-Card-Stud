@@ -3,6 +3,7 @@ from .. import tools
 from .. import constants as c
 import pygame as pg
 from .. components import info
+from ..audio_manager import AudioManager
 
 
 class Menu(tools.State):
@@ -13,6 +14,7 @@ class Menu(tools.State):
         self.startup(0.0, persist)
 
     def startup(self, current_time, persist):
+        AudioManager.play()
         self.next = c.Character_Select_Loading
        # self.persist = persist
         #self.game_info = persist

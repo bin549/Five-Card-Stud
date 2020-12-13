@@ -8,7 +8,7 @@ class Dealer(Person):
     def __init__(self, screen):
         super(Dealer, self).__init__(screen)
         self.screen = screen
-        self.image = setup.GFX['alien']
+        self.image = setup.CharacterGFX['alien']
 
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()

@@ -1,6 +1,6 @@
 from .entities.person import Person
 from .entities.deck import Deck
-from . import game_functions as gf
+from . import audio_manager as gf
 
 background, gameover, settings, screen = gf.init_game()
 

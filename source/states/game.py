@@ -1,10 +1,7 @@
 from .. import setup, tools
 import pygame as pg
 # from ..components import person
-# from ..components import player
-# from ..components import dealer
-# from ..components import deck
-# from ..components import card
+from ..components import player, dealer, deck, card
 # import time
 from .. import button
 from .. import constants as c
@@ -14,53 +11,47 @@ class Game(tools.State):
 
     def __init__(self):
         tools.State.__init__(self)
-        # self.player = None
-        # self.dealer = None
-        # self.deck = None
+        self.buttons = []
+        self.player = None
+        self.dealer = None
+        self.deck = None
         # self.screen = pg.display.set_mode(
         #     (c.SCREEN_WIDTH, c.SCREEN_HEIGHT))
         #
         # self.stand = False
-        # self.next = c.LOADING
+        self.next = c.GAME_OVER_Loading
 
     def startup(self, current_time, persist):
         print("welcome to my Blackjack world!")
         self.setup_background()
-        # self.setup_player()
-        # self.setup_dealer()
-        # self.setup_deck()
+        self.setup_player()
+        self.setup_dealer()
+        self.setup_deck()
         self.setup_button()
-        light_white = (40, 40, 40)
-        light_black = (0, 0, 0)
-
-        pg.draw.rect(self.surface, light_white, pg.Rect(
-            0, 0, c.SCREEN_WIDTH, c.SCREEN_HEIGHT))
-        pg.draw.rect(self.surface, light_black, pg.Rect(
-            c.SCREEN_WIDTH, 0, c.SCREEN_HEIGHT, c.SCREEN_HEIGHT))
-        for bu in self.buttons:
-            bu.draw()
-        #
         # self.start()
-        #
-        # self.player.blitme()
-        # self.dealer.blitme()
-        # self.deck.blitme()
-
-        # self.run()
+        self.draw_button()
+        self.player.blitme()
+        self.deck.blitme()
+        self.dealer.blitme()
+        # title
+        # score
 
     def update(self, surface, keys, current_time):
-        pass
+        self.update_cursor(keys)
 
-    def setup_button(self, surface):
-        self.buttons = []
-        btn1 = button.StartButton(surface, 'Get',  + 30, 15)
-        btn2 = button.GiveupButton(surface, 'Stop', c.SCREEN_WIDTH + 30, c.SCREEN_HEIGHT + 45)
+    def setup_button(self):
+        btn1 = button.StartButton(setup.SCREEN, 'Get',  30, 15)
+        btn2 = button.GiveupButton(setup.SCREEN, 'Stop',  30, 45)
         self.buttons.append(btn1)
         self.buttons.append(btn2)
 
-
-
-        # surface.blit(self.background, self.viewport, self.viewport)
+    def draw_button(self):
+        light_white = (40, 40, 40)
+        light_black = (0, 0, 0)
+        pg.draw.rect(setup.SCREEN, light_white, pg.Rect(0, 0, c.SCREEN_WIDTH, c.SCREEN_HEIGHT))
+        pg.draw.rect(setup.SCREEN, light_black, pg.Rect(c.SCREEN_WIDTH, 0, c.SCREEN_HEIGHT, c.SCREEN_HEIGHT))
+        for btn in self.buttons:
+            btn.draw()
 
     def setup_background(self):
         self.background = setup.CardGFX['b1fh']
@@ -69,16 +60,20 @@ class Game(tools.State):
                                              (int(self.background_rect.width * c.BACKGROUND_MULTIPLER),
                                               int(self.background_rect.height * c.BACKGROUND_MULTIPLER)))
         self.viewport = setup.SCREEN.get_rect(bottom=setup.SCREEN_RECT.bottom)
-    #
-    # def setup_player(self):
-    #     self.player = player.Player(self.screen)
-    #
-    # def setup_deck(self):
-    #     self.deck = deck.Deck(self.screen)
-    #
-    # def setup_dealer(self):
-    #     self.dealer = dealer.Dealer(self.screen)
-    #
+
+    def setup_player(self):
+        self.player = player.Player(setup.SCREEN)
+
+    def setup_deck(self):
+        self.deck = deck.Deck(setup.SCREEN)
+
+    def setup_dealer(self):
+        self.dealer = dealer.Dealer(setup.SCREEN)
+
+    def update_cursor(self, keys):
+        if keys[pg.K_ESCAPE]:
+            self.done = True
+
     # def show_some(self):
     #     print("Dealer's hands: ")
     #     self.dealer.hands.cards[0].flip(False)

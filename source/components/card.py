@@ -23,7 +23,7 @@ class Card(Sprite):
 
         self.screen = screen
 
-        self.image = setup.CGFX[self.card_img]
+        self.image = setup.CardGFX[self.card_img]
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.rect.centerx = self.screen_rect.centerx

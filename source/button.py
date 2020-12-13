@@ -42,18 +42,20 @@ class StartButton(Button):
         super().__init__(screen, text, x, y, [(26, 173, 25), (158, 217, 157)], True)
 
     def click(self, game):
-        if self.enable:
-            game.start()
-            game.winner = None
-            self.msg_image = self.font.render(self.text, True, self.text_color, self.button_color[1])
-            self.enable = False
-            return True
-        return False
+        pass
+        # if self.enable:
+        #     game.start()
+        #     game.winner = None
+        #     self.msg_image = self.font.render(self.text, True, self.text_color, self.button_color[1])
+        #     self.enable = False
+        #     return True
+        # return False
 
     def unclick(self):
-        if not self.enable:
-            self.msg_image = self.font.render(self.text, True, self.text_color, self.button_color[0])
-            self.enable = True
+        pass
+        # if not self.enable:
+        #     self.msg_image = self.font.render(self.text, True, self.text_color, self.button_color[0])
+        #     self.enable = True
 
 
 class GiveupButton(Button):
@@ -62,17 +64,19 @@ class GiveupButton(Button):
         super().__init__(screen, text, x, y, [(230, 67, 64), (236, 139, 137)], False)
 
     def click(self, game):
-        if self.enable:
-            game.is_play = False
-            if game.winner is None:
-                game.winner = game.map.reverseTurn(game.player)
-            self.msg_image = self.font.render(
-                self.text, True, self.text_color, self.button_color[1])
-            self.enable = False
-            return True
-        return False
+        # if self.enable:
+        #     game.is_play = False
+        #     if game.winner is None:
+        #         game.winner = game.map.reverseTurn(game.player)
+        #     self.msg_image = self.font.render(
+        #         self.text, True, self.text_color, self.button_color[1])
+        #     self.enable = False
+        #     return True
+        # return False
+        pass
 
     def unclick(self):
-        if not self.enable:
-            self.msg_image = self.font.render(self.text, True, self.text_color, self.button_color[0])
-            self.enable = True
+        # if not self.enable:
+        #     self.msg_image = self.font.render(self.text, True, self.text_color, self.button_color[0])
+        #     self.enable = True
+        pass

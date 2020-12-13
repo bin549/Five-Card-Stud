@@ -72,7 +72,7 @@ class GameOverLoading(Loading):
         self.time_list = [3000, 3200, 3235]
 
     def set_next_state(self):
-        return c.MENU
+        return c.GAME_OVER
 
     def set_info_state(self):
         return c.GAME_OVER

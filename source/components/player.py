@@ -8,7 +8,7 @@ class Player(Person):
     def __init__(self, screen):
         super(Player, self).__init__(screen)
         self.screen = screen
-        self.image = setup.GFX['Cute']
+        self.image = setup.CharacterGFX['Cute']
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.rect.centerx = self.screen_rect.centerx

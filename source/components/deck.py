@@ -18,7 +18,7 @@ class Deck(Sprite):
         self.shuffle()
 
         self.screen = screen
-        self.image = setup.CGFX['deck']
+        self.image = setup.EnvGFX['deck']
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.rect.centerx = self.screen_rect.centerx

@@ -12,3 +12,4 @@ SCREEN_RECT = SCREEN.get_rect()
 CharacterGFX = tools.load_all_gfx(os.path.join("resources", "sprites", "Characters"))
 EnvGFX = tools.load_all_gfx(os.path.join("resources", "sprites", "Environments"))
 CardGFX = tools.load_all_gfx(os.path.join("resources", "sprites", "Cards"))
+
