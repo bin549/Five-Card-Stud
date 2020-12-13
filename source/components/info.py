@@ -44,11 +44,11 @@ class Info(object):
         character_string = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ -*'
 
         for character, image_rect in zip(character_string, image_rect_list):
-            self.image_dict[character] = tools.get_image(setup.GFX['text_images'],
+            self.image_dict[character] = tools.get_image(setup.CardGFX['text_images'],
                                                          *image_rect, (92, 148, 252), 2.9)
 
     def create_state_labels(self):
-        if self.state == c.MAIN_MENU:
+        if self.state == c.MENU:
             self.create_main_menu_labels()
 
     def create_main_menu_labels(self):

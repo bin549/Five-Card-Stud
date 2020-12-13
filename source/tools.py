@@ -1,7 +1,7 @@
 from abc import abstractmethod
 import pygame as pg
 import os
-
+import pygame.event
 
 class State(object):
 
@@ -45,7 +45,9 @@ class Control(object):
 
     def update(self):
         self.current_time = pg.time.get_ticks()
+
         if self.state.done:
+            # print(self.state)
             self.flip_state()
         self.state.update(self.screen, self.keys, self.current_time)
 

@@ -1,5 +1,5 @@
 from . import tools
-from .states import main_menu, load_screen, game_scene
+from .states import menu, loading, game
 from . import constants as c
 from . import button
 import pygame
@@ -21,14 +21,14 @@ SCREEN_HEIGHT = MAP_HEIGHT
 
 
 def run_game():
-    game = tools.Control()
-    state_dict = {c.MAIN_MENU: main_menu.Menu(),
-                  c.LOAD_SCREEN: load_screen.LoadScreen(),
-                  c.Game_Scene: game_scene.GameScene(),
-                  c.GAME_OVER: load_screen.GameOver(),
-                  c.Retry: load_screen.Retry()}
-    game.setup_states(state_dict, c.MAIN_MENU)
-    game.main()
+    game_loader = tools.Control()
+    state_dict = {c.MENU: menu.Menu(),
+                  c.LOADING: loading.Loading(),
+                  c.Game: game.Game(),
+                  c.GAME_OVER: loading.GameOver(),
+                  c.Retry: loading.Retry()}
+    game_loader.setup_states(state_dict, c.MENU)
+    game_loader.main()
 
     # buttons = []
     # screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])

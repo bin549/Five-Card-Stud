@@ -5,23 +5,17 @@ from .settings import Settings
 
 def init_game():
     pygame.init()
-
     pygame.display.set_caption("Five Card Stud")
-
     pygame.mixer.music.load('resources/Sounds/植松伸夫 - Shuffle or Boogie.mp3')
     pygame.mixer.music.play(-1, 0.0)
     pygame.mixer.music.set_volume(0.2)
-
     background = pygame.image.load('resources/Sprites/Character/Monkey.png')
     gameover = pygame.image.load('resources/Sprites/Character/Monkey.png')
-
     game_over_sound = pygame.mixer.Sound('resources/Sounds/game_music.ogg')
     game_over_sound.set_volume(0.3)
-
     settings = Settings()
     screen = pygame.display.set_mode(
         (settings.screen_width, settings.screen_height))
-
     return background, gameover, settings, screen
 
 

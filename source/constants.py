@@ -1,8 +1,8 @@
-MAIN_MENU = 'main menu'
-LOAD_SCREEN = 'load screen'
+MENU = 'menu'
+LOADING = 'loading'
 Retry = 'retry'
 GAME_OVER = 'game over'
-Game_Scene = 'game scene'
+Game = 'game'
 
 SIZE_MULTIPLIER = 2.5
 BACKGROUND_MULTIPLER = 2.679
