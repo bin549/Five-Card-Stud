@@ -1,3 +1,4 @@
+
 from .. import setup
 from .. import tools
 from .. import constants as c
@@ -5,7 +6,7 @@ import pygame as pg
 from .. components import info
 
 
-class Menu(tools.State):
+class GameOver(tools.State):
 
     def __init__(self):
         tools.State.__init__(self)
@@ -13,7 +14,7 @@ class Menu(tools.State):
         self.startup(0.0, persist)
 
     def startup(self, current_time, persist):
-        self.next = c.Character_Select_Loading
+        self.next = c.Game_LOADING
        # self.persist = persist
         #self.game_info = persist
         #self.overhead_info = info.Info(self.game_info, c.MAIN_MENU)
@@ -94,3 +95,4 @@ class Menu(tools.State):
         #         self.player_index = 0
         if keys[pg.K_RETURN]:
             self.done = True
+

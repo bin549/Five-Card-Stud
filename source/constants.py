@@ -1,8 +1,11 @@
 MENU = 'menu'
-LOADING = 'loading'
+Game_LOADING = 'game loading'
 Retry = 'retry'
-GAME_OVER = 'game over'
 Game = 'game'
+Character_Select = 'character select'
+Character_Select_Loading = 'character select loading'
+GAME_OVER_Loading = 'game over loading'
+GAME_OVER = 'game over'
 
 SIZE_MULTIPLIER = 2.5
 BACKGROUND_MULTIPLER = 2.679
