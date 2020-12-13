@@ -58,7 +58,7 @@ class Menu(tools.State):
         # self.player_index = 0
 
     def setup_background(self):
-        self.background = setup.EnvGFX['BackGround']
+        self.background = setup.EnvGFX['BG']
         self.background_rect = self.background.get_rect()
         self.background = pg.transform.scale(self.background,
                                              (int(self.background_rect.width*c.BACKGROUND_MULTIPLER),
