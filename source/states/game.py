@@ -1,143 +1,169 @@
-from .. import setup, tools
-import pygame as pg
-# from ..components import person
-from ..components import player, dealer, deck, card
-# import time
-from .. import button
+from datetime import time
+from .. import setup
+from ..components import player, dealer, deck
 from .. import constants as c
+from ..state import State
+from ..button import TakeButton, StandButton, NextRoundButton
+import pygame
+from ..audio_manager import AudioManager
 
-
-class Game(tools.State):
+class Game(State):
 
     def __init__(self):
-        tools.State.__init__(self)
-        self.buttons = []
+        State.__init__(self)
+        self.viewport = setup.SCREEN.get_rect(bottom=setup.SCREEN_RECT.bottom)
         self.player = None
         self.dealer = None
         self.deck = None
-        # self.screen = pg.display.set_mode(
-        #     (c.SCREEN_WIDTH, c.SCREEN_HEIGHT))
-        #
-        # self.stand = False
+        self.stand = False
+        self.dealer_stand = False
+        self.show_all = False
         self.next = c.GAME_OVER_Loading
+        self.font = pygame.font.SysFont(None, 30)
+        self.screen = setup.SCREEN
+        self.start_time = 0
+        self.current_over = False
 
     def startup(self, current_time, persist):
-        print("welcome to my Blackjack world!")
+        self.current_time = current_time
         self.setup_background()
-        self.setup_player()
-        self.setup_dealer()
+        self.persist = persist
         self.setup_deck()
+        self.setup_dealer()
+        self.setup_player()
+        self.dealer.init_card(self.deck)
         self.setup_button()
-        # self.start()
-        self.draw_button()
+
+    def restart(self):
+        self.player.image = setup.CharacterGFX[self.persist["player"]]
+        self.deck.reset(185, 171)
+        self.player.init_card(self.deck)
+        self.dealer.init_card(self.deck)
+        self.takeBtn.enable = True
+        self.standBtn.enable = True
+        self.stand = False
+        self.dealer_stand = False
+        self.nextRoundBtn.enable = False
+        self.show_all = False
+
+    def update(self, surface, keys, current_time):
+        self.current_time = current_time
+        surface.blit(self.background, self.viewport, self.viewport)
         self.player.blitme()
         self.deck.blitme()
         self.dealer.blitme()
-        # title
-        # score
+        self.show_card(self.show_all)
+        self.check_score()
+        self.dealer_take()
+        self.draw_time()
+        self.draw_chips_amount()
+        self.check_pause(keys)
 
-    def update(self, surface, keys, current_time):
-        self.update_cursor(keys)
+    def draw_time(self):
+        self.time_msg = self.font.render(str(self.current_time), True, (255, 255, 255), (0, 0, 0))
+        self.time_msg_rect = self.time_msg.get_rect()
+        self.time_msg_rect.topleft = (430, 390)
+        self.screen.blit(self.time_msg, self.time_msg_rect)
+
+    def draw_chips_amount(self):
+        self.player_chips_total = self.font.render(str(self.player.chips.total), True, (255, 255, 255), (0, 0, 0))
+        self.player_chips_total_rect = self.player_chips_total.get_rect()
+        self.player_chips_total_rect.topleft = (430, 436)
+        self.screen.blit(self.player_chips_total, self.player_chips_total_rect)
 
     def setup_button(self):
-        btn1 = button.StartButton(setup.SCREEN, 'Get',  30, 15)
-        btn2 = button.GiveupButton(setup.SCREEN, 'Stop',  30, 45)
-        self.buttons.append(btn1)
-        self.buttons.append(btn2)
-
-    def draw_button(self):
-        light_white = (40, 40, 40)
-        light_black = (0, 0, 0)
-        pg.draw.rect(setup.SCREEN, light_white, pg.Rect(0, 0, c.SCREEN_WIDTH, c.SCREEN_HEIGHT))
-        pg.draw.rect(setup.SCREEN, light_black, pg.Rect(c.SCREEN_WIDTH, 0, c.SCREEN_HEIGHT, c.SCREEN_HEIGHT))
-        for btn in self.buttons:
-            btn.draw()
+        self.takeBtn = TakeButton(setup.SCREEN, "", 167, 409, 58, 21)
+        self.standBtn = StandButton(setup.SCREEN, "", 253, 409, 58, 21)
+        self.nextRoundBtn = NextRoundButton(setup.SCREEN, "", 20, 376, 93, 85)
+        self.nextRoundBtn.enable = False
 
     def setup_background(self):
-        self.background = setup.CardGFX['b1fh']
+        self.background = setup.EnvGFX['Game_BG']
         self.background_rect = self.background.get_rect()
-        self.background = pg.transform.scale(self.background,
-                                             (int(self.background_rect.width * c.BACKGROUND_MULTIPLER),
-                                              int(self.background_rect.height * c.BACKGROUND_MULTIPLER)))
-        self.viewport = setup.SCREEN.get_rect(bottom=setup.SCREEN_RECT.bottom)
 
     def setup_player(self):
-        self.player = player.Player(setup.SCREEN)
+        self.player = player.Player(setup.SCREEN, self.persist["player"], 20, 376)
+        self.player.init_card(self.deck)
+        self.player.take_ante(50)
 
     def setup_deck(self):
-        self.deck = deck.Deck(setup.SCREEN)
+        self.deck = deck.Deck(setup.SCREEN, 185, 171)
 
     def setup_dealer(self):
-        self.dealer = dealer.Dealer(setup.SCREEN)
+        self.dealer = dealer.Dealer(setup.SCREEN, 194, 22)
 
-    def update_cursor(self, keys):
-        if keys[pg.K_ESCAPE]:
+    def show_card(self, show_all: bool):
+        if show_all:
+            self.dealer.hands.cards[0].flip(True)
+            self.dealer.hands.show(85, 55)
+            self.player.hands.show(85, 230)
+        else:
+            self.dealer.hands.cards[0].flip(False)
+            self.dealer.hands.show(85, 55)
+            self.player.hands.show(85, 230)
+
+    def check_click(self, x, y):
+        if self.takeBtn.rect.collidepoint(x, y):
+            if self.takeBtn.click():
+                v_card = self.deck.deal()
+                self.player.hit(v_card)
+        elif self.standBtn.rect.collidepoint(x, y):
+            if self.standBtn.click():
+                self.stand = True
+                self.takeBtn.enable = False
+                self.standBtn.enable = False
+                if self.dealer_stand:
+                    self.verdict()
+        elif self.nextRoundBtn.rect.collidepoint(x, y):
+            if self.nextRoundBtn.click():
+                self.restart()
+
+    def dealer_take(self):
+        if not self.dealer_stand:
+            if self.dealer.hands.points < 17:
+                if (self.current_time % 1500) < 20:
+                    v_card = self.deck.deal()
+                    self.dealer.hit(v_card)
+            else:
+                self.dealer_stand = True
+                if self.stand:
+                    self.verdict()
+
+    def check_score(self):
+        if self.player.hands.points > 21:
+            self.takeBtn.enable = False
+
+    def verdict(self):
+        print(self.dealer.hands.points)
+        print(self.player.hands.points)
+        if self.dealer.hands.points > 21 and 17 <= self.player.hands.points <= 21:
+                self.player.chips.win_bet()
+                print("Round Win")
+                self.player.image = setup.CharacterGFX[self.persist["player"] + " - win"]
+        elif self.player.hands.points > 21 and 17 <= self.dealer.hands.points <= 21:
+                self.player.chips.lose_bet()
+                self.player.image = setup.CharacterGFX[self.persist["player"] + " - lose"]
+                print("Round Lose")
+        elif self.dealer.hands.points > self.player.hands.points:
+            self.player.chips.lose_bet()
+            self.player.image = setup.CharacterGFX[self.persist["player"] + " - lose"]
+            print("Round Lose")
+        else:
+            self.player.image = setup.CharacterGFX[self.persist["player"] + " - push"]
+            print("Round push")
+        print("Click Head To Continue！")
+        if self.player.chips.total <= 0:
+            AudioManager().play_Lose_Sound()
+            self.next = c.GAME_Lose_Loading
             self.done = True
+        elif self.player.chips.total >= 200:
+            AudioManager().play_Win_Sound()
+            self.next = c.GAME_OVER_Loading
+            self.done = True
+        self.show_all = True
+        self.nextRoundBtn.enable = True
 
-    # def show_some(self):
-    #     print("Dealer's hands: ")
-    #     self.dealer.hands.cards[0].flip(False)
-    #     print(self.dealer.hands)
-    #     self.dealer.hands.draw_us()
-    #     print("Player's hands: ")
-    #     print(self.player.hands)
-    #     self.player.hands.draw_us()
-    #
-    # def show_all(self):
-    #     print("Dealer's hands: ")
-    #     self.dealer.hands.cards[0].flip(True)
-    #     print(self.dealer.hands)
-    #     self.dealer.hands.draw_us()
-    #     print("Player's hands: ")
-    #     print(self.player.hands)
-    #     self.player.hands.draw_us()
-    #
-    # def start(self):
-    #     self.deck.reset()
-    #     self.stand = False
-    #     self.dealer.init_card(self.deck)
-    #     self.player.init_card(self.deck)
-    #     self.show_some()
-    #     x = int(input("Please take your ante: "))
-    #     self.player.take_ante(x)
-    #     # while not self.done:
-    #    #     self.run()
-    #
-    # def player_hit(self):
-    #     while not self.stand:
-    #         x = input("Player stand or hit, Enter s or h: ")
-    #         if x[0] == 'h':
-    #             v_card = self.deck.deal()
-    #             v_card.blitme()
-    #             self.player.hit(v_card)
-    #         elif x[0] == 's':
-    #             self.stand = True
-    #         if self.player.hands.points > 21:
-    #             print("Player bunst, Dealer wins")
-    #             self.player.chips.lose_bet()
-    #             self.stand = True
-    #
-    # def run(self):
-    #     self.player_hit()
-    #     while self.dealer.hands.points < 17:
-    #         v_card = self.deck.deal()
-    #         v_card.blitme()
-    #         self.dealer.hit(v_card)
-    #         time.sleep(100)
-    #     self.show_all()
-    #     if self.dealer.hands.points > 21 or self.dealer.hands.points < self.player.hands.points:
-    #         print("Player wins")
-    #         self.player.chips.win_bet()
-    #     elif self.dealer.hands.points > self.player.hands.points:
-    #         print("Dealer wins")
-    #         self.player.chips.lose_bet()
-    #     else:
-    #         print("It's a push")
-    #
-    #     if self.player.chips.total <= 0:
-    #         print("no money boy need go home.")
-    #         self.next = c.GAME_OVER
-    #         self.done = True
-    #
-    #     print("player stand at :" + str(self.player.chips.total))
-
+    def check_pause(self, keys):
+        if keys[pygame.K_ESCAPE]:
+            self.next = c.Pause
+            self.done = True

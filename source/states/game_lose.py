@@ -1,13 +1,11 @@
-from random import random
 from .. import setup
 from .. import constants as c
 from ..state import State
 from ..components import deck
-from ..button import MenuButton, RetryButton
+import pygame
 from ..audio_manager import AudioManager
 
-
-class GameOver(State):
+class GameLose(State):
 
     def __init__(self):
         State.__init__(self)
@@ -20,27 +18,26 @@ class GameOver(State):
         self.persist = persist
         self.next = c.Game_LOADING
         self.setup_background()
-        self.setup_button()
+        self.setup_deck()
 
     def update(self, surface, keys, current_time):
         self.current_time = current_time
         surface.blit(self.background, self.viewport, self.viewport)
+        self.rasc()
+        self.check_pause(keys)
+
+    def setup_deck(self):
+        self.deck = deck.Deck(setup.SCREEN, 185, 171)
 
     def setup_background(self):
-        self.background = setup.EnvGFX['GO_BG']
+        self.background = setup.EnvGFX['LoserBG']
         self.background_rect = self.background.get_rect()
 
-    def setup_button(self):
-        self.menuBtn = MenuButton(setup.SCREEN, "", 66, 262, 148, 37)
-        self.retryBtn = RetryButton(setup.SCREEN, "", 66, 335, 148, 37)
+    def rasc(self):
+        self.deck.blit_handcards()
 
-    def check_click(self, x, y):
-        if self.menuBtn.rect.collidepoint(x, y):
-            if self.menuBtn.click():
-                self.next = c.MENU
-                AudioManager().play_MenuTheme()
-                self.done = True
-        elif self.retryBtn.rect.collidepoint(x, y):
-                self.next = c.Game
-                AudioManager().play_Retry_Sound()
-                self.done = True
+
+    def check_pause(self, keys):
+        if keys[pygame.K_ESCAPE]:
+            self.next = c.Pause
+            self.done = True
