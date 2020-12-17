@@ -26,6 +26,7 @@ class Hands:
     def __getitem__(self, pos):
         return self.cards[pos]
 
-    def draw_us(self):
-        for card in self.cards:
+    def show(self, x, y):
+        for index, card in enumerate(self.cards):
+            card.set_pos(x + 80 * index, y)
             card.blitme()

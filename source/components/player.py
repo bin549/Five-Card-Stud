@@ -1,3 +1,4 @@
+from random import random
 from .hands import Hands
 from .chips import Chips
 from .. import setup
@@ -5,16 +6,13 @@ from .person import Person
 
 class Player(Person):
 
-    def __init__(self, screen):
+    def __init__(self, screen, name, x, y):
         super(Player, self).__init__(screen)
+        self.name = name
         self.screen = screen
-        self.image = setup.CharacterGFX['Cute']
+        self.image = setup.CharacterGFX[self.name]
         self.rect = self.image.get_rect()
-        self.screen_rect = screen.get_rect()
-        self.rect.centerx = self.screen_rect.centerx
-        self.rect.bottom = self.screen_rect.bottom
-        self.center = float(self.rect.centerx)
-
+        self.rect.topleft = (x, y)
         self.hands = Hands()
         self.chips = Chips()
 
@@ -28,9 +26,6 @@ class Player(Person):
 
     def hit(self, card):
         self.hands.add_card(card)
-
-    def update(self):
-        self.rect.centerx = self.center
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)

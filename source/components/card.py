@@ -18,18 +18,16 @@ class Card(Sprite):
         self.rank = rank
         self.point = rank_points[rank]
         self.face_up = True
-        self.card_img = self.suit + '_' + self.rank
         self.strength = rank_values[rank] * 10 + suit_values[suit]
 
+        self.image_name = self.suit + "_" + self.rank
         self.screen = screen
-
-        self.image = setup.CardGFX[self.card_img]
+        self.image = setup.CardGFX[self.image_name]
+        self.hide_image = setup.CardGFX["back"]
         self.rect = self.image.get_rect()
-        self.screen_rect = screen.get_rect()
-        self.rect.centerx = self.screen_rect.centerx
-        self.rect.bottom = self.screen_rect.bottom
-        self.center = float(self.rect.centerx)
-        self.screen = screen
+
+    def set_pos(self, x, y):
+        self.rect.topleft = (x, y)
 
     def __str__(self):
         if not self.face_up:
@@ -54,11 +52,12 @@ class Card(Sprite):
     def flip(self, dir_up):
         if dir_up:
             self.face_up = True
-            self.image = setup.CGFX[self.card_img]
         else:
             self.face_up = False
-            self.image = setup.CGFX["b2fv"]
 
     def blitme(self):
-        print(self.card_img)
-        self.screen.blit(self.image, self.rect)
+        if self.face_up:
+            self.screen.blit(self.image, self.rect)
+        else:
+            self.screen.blit(self.hide_image, self.rect)
+

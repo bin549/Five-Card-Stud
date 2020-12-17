@@ -1,7 +1,4 @@
-
-
-SIZE_MULTIPLIER = 2.5
-BACKGROUND_MULTIPLER = 2.679
+SIZE_MULTIPLIER = 1
 
 BLACK = (0,   0,   0)
 
@@ -9,9 +6,9 @@ ITEM_SHEET = 'item_objects'
 
 ORIGINAL_CAPTION = "Five Card Stud"
 
-# GBA Size
-SCREEN_WIDTH = 240
-SCREEN_HEIGHT = 160
+# SNES Size
+SCREEN_WIDTH = 512
+SCREEN_HEIGHT = 480
 SCREEN_SIZE = (SCREEN_WIDTH, SCREEN_HEIGHT)
 
 # Data
@@ -36,3 +33,11 @@ Character_Select = 'character select'
 Character_Select_Loading = 'character select loading'
 GAME_OVER_Loading = 'game over loading'
 GAME_OVER = 'game over'
+GAME_Lose_Loading = 'game lose loading'
+GAME_Lose = 'game lose'
+Pause = 'pause'
+
+# Button
+BUTTON_WIDTH = 83
+BUTTON_HEIGHT = 34
+
